@@ -1,11 +1,8 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import 'dotenv/config';
+import { drizzle } from 'drizzle-orm/planetscale-serverless';
+import { connect } from '@planetscale/database';
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL env variable is not set!');
-}
+const connection = connect({
+  url: process.env.DATABASE_URL,
+});
 
-const connectionString = process.env.DATABASE_URL;
-const client = postgres(connectionString);
-export const db = drizzle(client);
+export const db = drizzle(connection);

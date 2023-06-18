@@ -1,32 +1,31 @@
 import {
-  pgTable,
-  serial,
-  varchar,
+  datetime,
+  index,
+  int,
+  mysqlTable,
   text,
-  integer,
   timestamp,
   uniqueIndex,
-  index,
-  date,
-} from 'drizzle-orm/pg-core';
+  varchar,
+} from 'drizzle-orm/mysql-core';
 
-export const accounts = pgTable(
+export const accounts = mysqlTable(
   'accounts',
   {
-    id: serial('id').primaryKey().notNull(),
-    userId: varchar('userId', { length: 191 }).notNull(),
-    type: varchar('type', { length: 191 }).notNull(),
-    provider: varchar('provider', { length: 191 }).notNull(),
-    providerAccountId: varchar('providerAccountId', { length: 191 }).notNull(),
+    id: varchar('id', { length: 255 }).primaryKey().notNull(),
+    userId: varchar('userId', { length: 255 }).notNull(),
+    type: varchar('type', { length: 255 }).notNull(),
+    provider: varchar('provider', { length: 255 }).notNull(),
+    providerAccountId: varchar('providerAccountId', { length: 255 }).notNull(),
     access_token: text('access_token'),
-    expires_in: integer('expires_in'),
+    expires_in: int('expires_in'),
     id_token: text('id_token'),
     refresh_token: text('refresh_token'),
-    refresh_token_expires_in: integer('refresh_token_expires_in'),
-    scope: varchar('scope', { length: 191 }),
-    token_type: varchar('token_type', { length: 191 }),
+    refresh_token_expires_in: int('refresh_token_expires_in'),
+    scope: varchar('scope', { length: 255 }),
+    token_type: varchar('token_type', { length: 255 }),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
-    updatedAt: timestamp('updatedAt').defaultNow().notNull(),
+    updatedAt: timestamp('updatedAt').defaultNow().onUpdateNow().notNull(),
   },
   account => ({
     providerProviderAccountIdIndex: uniqueIndex(
@@ -36,15 +35,15 @@ export const accounts = pgTable(
   })
 );
 
-export const sessions = pgTable(
+export const sessions = mysqlTable(
   'sessions',
   {
-    id: varchar('id', { length: 191 }).primaryKey().notNull(),
-    sessionToken: varchar('sessionToken', { length: 191 }).notNull(),
-    userId: varchar('userId', { length: 191 }).notNull(),
-    expires: date('expires').notNull(),
+    id: varchar('id', { length: 255 }).primaryKey().notNull(),
+    sessionToken: varchar('sessionToken', { length: 255 }).notNull(),
+    userId: varchar('userId', { length: 255 }).notNull(),
+    expires: datetime('expires').notNull(),
     created_at: timestamp('created_at').notNull().defaultNow(),
-    updated_at: timestamp('updated_at').notNull().defaultNow(),
+    updated_at: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
   },
   session => ({
     sessionTokenIndex: uniqueIndex('sessions__sessionToken__idx').on(
@@ -54,30 +53,30 @@ export const sessions = pgTable(
   })
 );
 
-export const users = pgTable(
+export const users = mysqlTable(
   'users',
   {
-    id: varchar('id', { length: 191 }).primaryKey().notNull(),
-    name: varchar('name', { length: 191 }),
-    email: varchar('email', { length: 191 }).notNull(),
+    id: varchar('id', { length: 255 }).primaryKey().notNull(),
+    name: varchar('name', { length: 255 }),
+    email: varchar('email', { length: 255 }).notNull(),
     emailVerified: timestamp('emailVerified'),
-    image: varchar('image', { length: 191 }),
+    image: varchar('image', { length: 255 }),
     created_at: timestamp('created_at').notNull().defaultNow(),
-    updated_at: timestamp('updated_at').notNull().defaultNow(),
+    updated_at: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
   },
   user => ({
     emailIndex: uniqueIndex('users__email__idx').on(user.email),
   })
 );
 
-export const verificationTokens = pgTable(
+export const verificationTokens = mysqlTable(
   'verification_tokens',
   {
-    identifier: varchar('identifier', { length: 191 }).primaryKey().notNull(),
-    token: varchar('token', { length: 191 }).notNull(),
-    expires: date('expires').notNull(),
+    identifier: varchar('identifier', { length: 255 }).primaryKey().notNull(),
+    token: varchar('token', { length: 255 }).notNull(),
+    expires: datetime('expires').notNull(),
     created_at: timestamp('created_at').notNull().defaultNow(),
-    updated_at: timestamp('updated_at').notNull().defaultNow(),
+    updated_at: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
   },
   verificationToken => ({
     tokenIndex: uniqueIndex('verification_tokens__token__idx').on(

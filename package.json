@@ -7,17 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
-    "migrate": "node -r esbuild-register db/migrate.ts"
+    "migrations:generate": "drizzle-kit generate:mysql --config=drizzle.config.ts",
+    "migrations:drop": "drizzle-kit drop --config=drizzle.config.ts",
+    "db:push": "drizzle-kit push:mysql --config=drizzle.config.ts"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.1",
+    "@planetscale/database": "^1.7.0",
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
-    "drizzle-orm": "^0.27.0",
+    "drizzle-orm": "^0.26.5",
     "next": "^13.4.6",
     "next-auth": "^4.22.1",
-    "postgres": "^3.3.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^1.13.2"
@@ -28,8 +30,7 @@
     "@types/react-dom": "^18.2.5",
     "autoprefixer": "^10.4.14",
     "dotenv": "^16.3.0",
-    "drizzle-kit": "^0.19.0",
-    "esbuild-register": "^3.4.2",
+    "drizzle-kit": "^0.18.1",
     "eslint": "^8.42.0",
     "eslint-config-next": "^13.4.6",
     "postcss": "^8.4.24",
