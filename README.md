@@ -44,3 +44,5 @@ npm run dev
 # or
 yarn dev
 ```
+
+Drizzle Adapter by [@mattddean](https://github.com/mattddean)
