@@ -22,7 +22,7 @@ Fill up .env
 DATABASE_URL='mysql://username:passowrd@0.0.0.0/db' #PlanetScale
 
 NEXTAUTH_URL='http://localhost:3000'
-AUTH_SECRET=
+NEXTAUTH_SECRET=
 
 GITHUB_ID=
 GITHUB_SECRET=
